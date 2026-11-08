@@ -1,0 +1,6 @@
+{
+  "summary":  "Kế hoạch thiết kế và phát triển trang thông tin lưu trữ hành tinh MEOWN-2407 cho bot chat AI Roleplay, với 5 danh mục nội dung (Lịch sử, Địa lý, Chủng tộc, Kinh tế & Khí hậu, Các hệ thống liên tinh), trình xem HTML tương tác kèm fullscreen, hệ thống xác thực Admin bảo mật phía server (mật khẩu bhnt2006 không lộ client), trình upload file HTML/MP3 đồng bộ toàn trang, và đài phát thanh mini radio góc màn hình.",
+  "updatedAt":  "2026-11-08T18:17:22.986136406Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}

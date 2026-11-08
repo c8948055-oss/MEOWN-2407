@@ -1,0 +1,6 @@
+{
+  "name": "MEOWN-2407 Codex - Kho Lưu Trữ Hành Tinh",
+  "description": "Trang lưu trữ tư liệu thế giới hành tinh MEOWN-2407 dành cho AI Roleplay bot: Lịch sử, Địa lý, Chủng tộc, Kinh tế & Khí hậu, Các hệ thống liên tinh cùng đài phát thanh mini và bảng quản trị.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

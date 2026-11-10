@@ -17,6 +17,8 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'bhnt2006';
 // Paths for persistent data
 const DATA_DIR = path.join(__dirname, 'data');
 const UPLOADS_DIR = path.join(DATA_DIR, 'uploads');
+const BACKUPS_DIR = path.join(DATA_DIR, 'backups');
+const BACKUPS_MANIFEST = path.join(BACKUPS_DIR, 'manifest.json');
 const CONTENT_FILE = path.join(DATA_DIR, 'content.json');
 const TRACKS_FILE = path.join(DATA_DIR, 'tracks.json');
 
@@ -27,16 +29,91 @@ if (!fs.existsSync(DATA_DIR)) {
 if (!fs.existsSync(UPLOADS_DIR)) {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
+if (!fs.existsSync(BACKUPS_DIR)) {
+  fs.mkdirSync(BACKUPS_DIR, { recursive: true });
+}
 
-// In-memory valid admin session tokens
+// In-memory valid admin session tokens and HMAC token persistence
 const validAdminTokens = new Set<string>();
+
+function generateAdminToken(): string {
+  const id = crypto.randomUUID();
+  const hmac = crypto.createHmac('sha256', ADMIN_PASSWORD).update(id).digest('hex');
+  const token = `${id}.${hmac}`;
+  validAdminTokens.add(token);
+  return token;
+}
+
+function verifyAdminToken(token: string): boolean {
+  if (!token || typeof token !== 'string') return false;
+  if (validAdminTokens.has(token)) return true;
+  const parts = token.split('.');
+  if (parts.length !== 2) return false;
+  const [id, hmac] = parts;
+  const expected = crypto.createHmac('sha256', ADMIN_PASSWORD).update(id).digest('hex');
+  if (hmac === expected) {
+    validAdminTokens.add(token);
+    return true;
+  }
+  return false;
+}
+
+// Backup Helpers
+interface BackupRecord {
+  id: string;
+  tabId: string;
+  filename: string;
+  originalName: string;
+  timestamp: string;
+  size: number;
+  url: string;
+  title?: string;
+}
+
+function getBackups(): BackupRecord[] {
+  if (fs.existsSync(BACKUPS_MANIFEST)) {
+    try {
+      return JSON.parse(fs.readFileSync(BACKUPS_MANIFEST, 'utf-8'));
+    } catch (e) {
+      return [];
+    }
+  }
+  return [];
+}
+
+function saveBackup(tabId: string, originalName: string, content: string | Buffer, title?: string): BackupRecord {
+  const timestamp = Date.now();
+  const backupId = `bk_${tabId}_${timestamp}`;
+  const cleanOriginal = originalName.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const diskFilename = `${backupId}_${cleanOriginal}`;
+  const targetPath = path.join(BACKUPS_DIR, diskFilename);
+  fs.writeFileSync(targetPath, content);
+  const stats = fs.statSync(targetPath);
+
+  const record: BackupRecord = {
+    id: backupId,
+    tabId,
+    filename: diskFilename,
+    originalName,
+    timestamp: new Date().toISOString(),
+    size: stats.size,
+    url: `/backups/${diskFilename}`,
+    title: title || originalName
+  };
+
+  const list = getBackups();
+  list.unshift(record);
+  fs.writeFileSync(BACKUPS_MANIFEST, JSON.stringify(list, null, 2), 'utf-8');
+  return record;
+}
 
 // Middleware
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Static uploads directory
+// Static uploads & backups directories
 app.use('/uploads', express.static(UPLOADS_DIR));
+app.use('/backups', express.static(BACKUPS_DIR));
 
 // Default HTML template generator for seed data
 function generateDefaultHtmlContent(
@@ -774,31 +851,34 @@ function getInitialTracks() {
   ];
 }
 
-// Ensure default content file and HTML files exist
+// Ensure default content file and HTML files exist WITHOUT overwriting admin updates
 function initStorage() {
   const initialContent = getInitialContent();
   let content = initialContent;
+  let fileExisted = false;
+
   if (fs.existsSync(CONTENT_FILE)) {
     try {
       const data = JSON.parse(fs.readFileSync(CONTENT_FILE, 'utf-8'));
-      content = { ...content, ...data };
-      // Always ensure history tab has the latest canon unless custom-uploaded
-      content.history = { ...initialContent.history, version: (data.history?.version || 1) + 1 };
+      // PRESERVE ALL SAVED CONTENT - never wipe user changes
+      content = { ...initialContent, ...data };
+      fileExisted = true;
     } catch (e) {
       console.error('Error reading content file, re-initializing:', e);
     }
   }
 
-  // Ensure default html file exists or regenerate for history
+  // Ensure default html file exists ONLY IF it doesn't already exist on disk
   const categories = ['history', 'geography', 'species', 'economy', 'systems'];
   for (const cat of categories) {
     const filePath = path.join(UPLOADS_DIR, `${cat}.html`);
-    if (cat === 'history' || !fs.existsSync(filePath)) {
-      const catData = (content as any)[cat];
-      const html = generateDefaultHtmlContent(
+    const catData = (content as any)[cat];
+
+    if (!fs.existsSync(filePath)) {
+      const html = catData?.htmlContent || generateDefaultHtmlContent(
         cat,
-        catData.title,
-        catData.subtitle,
+        catData?.title || cat,
+        catData?.subtitle || '',
         cat === 'history' ? '#06b6d4' : cat === 'geography' ? '#10b981' : cat === 'species' ? '#a855f7' : cat === 'economy' ? '#f59e0b' : '#3b82f6',
         cat === 'history'
       );
@@ -806,13 +886,24 @@ function initStorage() {
       (content as any)[cat].htmlFileUrl = `/uploads/${cat}.html`;
       (content as any)[cat].htmlContent = html;
     } else {
-      if (!(content as any)[cat].htmlContent) {
+      // If file exists, ensure content has htmlContent synced
+      if (!(content as any)[cat]?.htmlContent) {
         (content as any)[cat].htmlContent = fs.readFileSync(filePath, 'utf-8');
       }
     }
   }
 
   fs.writeFileSync(CONTENT_FILE, JSON.stringify(content, null, 2), 'utf-8');
+
+  // Also create initial backup if none exists
+  if (getBackups().length === 0) {
+    for (const cat of categories) {
+      const catData = (content as any)[cat];
+      if (catData?.htmlContent) {
+        saveBackup(cat, `khoi_tao_${cat}.html`, catData.htmlContent, catData.title);
+      }
+    }
+  }
 
   // Tracks
   if (!fs.existsSync(TRACKS_FILE)) {
@@ -830,7 +921,7 @@ function requireAdmin(req: Request, res: Response, next: NextFunction): void {
     return;
   }
   const token = authHeader.substring(7).trim();
-  if (!validAdminTokens.has(token)) {
+  if (!verifyAdminToken(token)) {
     res.status(403).json({ error: 'Phiên làm việc quản trị viên không hợp lệ hoặc đã hết hạn.' });
     return;
   }
@@ -849,8 +940,7 @@ app.post('/api/admin/login', (req: Request, res: Response) => {
 
   // Strict server-side verification: password is NEVER exposed to the client
   if (password === ADMIN_PASSWORD) {
-    const token = crypto.randomUUID();
-    validAdminTokens.add(token);
+    const token = generateAdminToken();
     res.json({
       success: true,
       message: 'Đăng nhập Quản Trị Viên thành công.',
@@ -868,7 +958,7 @@ app.get('/api/admin/verify', (req: Request, res: Response) => {
   const authHeader = req.headers.authorization;
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.substring(7).trim();
-    if (validAdminTokens.has(token)) {
+    if (verifyAdminToken(token)) {
       res.json({ authenticated: true });
       return;
     }
@@ -934,34 +1024,128 @@ app.post('/api/admin/content/:tabId', requireAdmin, (req: Request, res: Response
     if (highlights && Array.isArray(highlights)) currentTab.highlights = highlights;
     if (videoUrl !== undefined) currentTab.videoUrl = videoUrl;
 
+    let savedBackupRecord: BackupRecord | null = null;
+
     // Handle uploaded HTML file base64 or raw string
     if (fileBase64 && filename) {
       const cleanName = `${tabId}_${Date.now()}_${filename.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
       const targetPath = path.join(UPLOADS_DIR, cleanName);
       const buffer = Buffer.from(fileBase64, 'base64');
       fs.writeFileSync(targetPath, buffer);
+
+      // Overwrite main tab HTML file as well for canonical link
+      const mainPath = path.join(UPLOADS_DIR, `${tabId}.html`);
+      fs.writeFileSync(mainPath, buffer);
+
+      const htmlString = buffer.toString('utf-8');
       currentTab.htmlFileUrl = `/uploads/${cleanName}`;
-      currentTab.htmlContent = buffer.toString('utf-8');
+      currentTab.htmlContent = htmlString;
+      currentTab.isCustomUpload = true;
+      currentTab.uploadedFilename = filename;
+
+      // Create permanent backup!
+      savedBackupRecord = saveBackup(tabId, filename, buffer, currentTab.title);
+      currentTab.lastBackupId = savedBackupRecord.id;
     } else if (htmlContent !== undefined) {
       currentTab.htmlContent = htmlContent;
-      // Also write to tabId.html
       const targetPath = path.join(UPLOADS_DIR, `${tabId}.html`);
       fs.writeFileSync(targetPath, htmlContent, 'utf-8');
       currentTab.htmlFileUrl = `/uploads/${tabId}.html?v=${Date.now()}`;
+      currentTab.isCustomUpload = true;
+      currentTab.uploadedFilename = filename || `${tabId}_edited.html`;
+
+      // Create permanent backup!
+      savedBackupRecord = saveBackup(tabId, currentTab.uploadedFilename, htmlContent, currentTab.title);
+      currentTab.lastBackupId = savedBackupRecord.id;
     }
 
     currentTab.lastUpdated = new Date().toISOString();
     currentTab.version = (currentTab.version || 1) + 1;
 
+    // Save main content
     fs.writeFileSync(CONTENT_FILE, JSON.stringify(contentData, null, 2), 'utf-8');
+
+    // Also write a snapshot backup of entire content.json
+    try {
+      const snapshotPath = path.join(BACKUPS_DIR, `content_snapshot_${Date.now()}.json`);
+      fs.writeFileSync(snapshotPath, JSON.stringify(contentData, null, 2), 'utf-8');
+    } catch (e) {
+      // ignore snapshot error
+    }
+
     res.json({
       success: true,
-      message: `Đã lưu và đồng bộ tài liệu phân hệ "${tabId}" thành công.`,
-      content: currentTab
+      message: `Đã lưu, sao lưu và đồng bộ toàn bộ tài liệu "${currentTab.title}" thành công.`,
+      content: currentTab,
+      backup: savedBackupRecord
     });
   } catch (error) {
     console.error(`Error updating content for ${tabId}:`, error);
-    res.status(500).json({ error: 'Đã xảy ra lỗi khi lưu tư liệu.' });
+    res.status(500).json({ error: 'Đã xảy ra lỗi khi lưu và sao lưu tư liệu.' });
+  }
+});
+
+// 5b. Get all backups (Admin only)
+app.get('/api/admin/backups', requireAdmin, (_req: Request, res: Response) => {
+  try {
+    const backups = getBackups();
+    res.json({ backups });
+  } catch (error) {
+    res.status(500).json({ error: 'Không thể đọc lịch sử sao lưu.' });
+  }
+});
+
+// 5c. Restore a backup (Admin only)
+app.post('/api/admin/backups/:backupId/restore', requireAdmin, (req: Request, res: Response) => {
+  const { backupId } = req.params;
+  try {
+    const backups = getBackups();
+    const record = backups.find(b => b.id === backupId);
+    if (!record) {
+      res.status(404).json({ error: 'Không tìm thấy bản sao lưu này.' });
+      return;
+    }
+
+    const backupFilePath = path.join(BACKUPS_DIR, record.filename);
+    if (!fs.existsSync(backupFilePath)) {
+      res.status(404).json({ error: 'Tệp sao lưu trên đĩa không tồn tại.' });
+      return;
+    }
+
+    const contentHtml = fs.readFileSync(backupFilePath, 'utf-8');
+    const tabId = record.tabId;
+
+    let contentData = fs.existsSync(CONTENT_FILE)
+      ? JSON.parse(fs.readFileSync(CONTENT_FILE, 'utf-8'))
+      : getInitialContent();
+
+    if (!contentData[tabId]) {
+      contentData[tabId] = getInitialContent()[tabId as keyof ReturnType<typeof getInitialContent>];
+    }
+
+    // Overwrite category with restored backup
+    contentData[tabId].htmlContent = contentHtml;
+    contentData[tabId].htmlFileUrl = `/uploads/${tabId}.html?v=${Date.now()}`;
+    contentData[tabId].isCustomUpload = true;
+    contentData[tabId].uploadedFilename = record.originalName;
+    contentData[tabId].lastUpdated = new Date().toISOString();
+    contentData[tabId].version = (contentData[tabId].version || 1) + 1;
+
+    // Overwrite disk file as well
+    const diskPath = path.join(UPLOADS_DIR, `${tabId}.html`);
+    fs.writeFileSync(diskPath, contentHtml, 'utf-8');
+
+    // Save content.json
+    fs.writeFileSync(CONTENT_FILE, JSON.stringify(contentData, null, 2), 'utf-8');
+
+    res.json({
+      success: true,
+      message: `Đã khôi phục thành công bản sao lưu "${record.originalName}" cho phân hệ "${tabId}".`,
+      content: contentData[tabId]
+    });
+  } catch (error) {
+    console.error('Error restoring backup:', error);
+    res.status(500).json({ error: 'Không thể khôi phục bản sao lưu.' });
   }
 });
 

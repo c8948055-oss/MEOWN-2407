@@ -154,13 +154,22 @@ export const CategoryViewer: React.FC<CategoryViewerProps> = ({
 
           {/* Metadata Footer */}
           <div className="mt-5 pt-3.5 border-t border-slate-800/60 flex flex-wrap items-center justify-between text-xs font-mono text-slate-500 gap-2">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <span className="flex items-center gap-1">
                 <Clock className="w-3.5 h-3.5" />
                 <span>Cập nhật: {new Date(content.lastUpdated).toLocaleDateString('vi-VN')}</span>
               </span>
               <span>·</span>
               <span>Phiên bản: v{content.version || 1}.0</span>
+              {content.isCustomUpload && (
+                <>
+                  <span>·</span>
+                  <span className="text-emerald-400 font-sans flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Đã sao lưu: {content.uploadedFilename || 'Tệp tải lên bởi Admin'}</span>
+                  </span>
+                </>
+              )}
             </div>
             <div className="flex items-center gap-1 text-cyan-400/80">
               <FileCode className="w-3.5 h-3.5" />

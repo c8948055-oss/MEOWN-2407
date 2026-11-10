@@ -1,0 +1,91 @@
+{
+  "history": {
+    "id": "history",
+    "title": "Lịch Sử Đã Cập Nhật",
+    "subtitle": "Tài liệu admin tải lên",
+    "summary": "Bản tóm tắt kiểm tra sao lưu",
+    "highlights": [
+      "Niên đại 12,4 tỷ năm: Sinh ra từ vũ trụ sơ khai, quay quanh hệ sao đôi cổ thuộc Quần thể sao II.",
+      "Tâm Vi Kỳ Dị Lượng Tử: Lực hút cực hạn tạo lõi sắt-niken siêu nén và từ quyển siêu cường gấp 8 lần Trái Đất.",
+      "Hệ Vệ Tinh Đôi Selene-I & II: Hình thành sau cú va chạm Acheron (11,9 tỷ năm trước), nghiêng trục 21,8° và đưa ngày-đêm về 32 giờ chuẩn.",
+      "Nguồn gốc Tinh Thể MEOWN: Kết tinh tại ranh giới D'' sâu 2.800 km (135 GPa, 3.800 K), được tôi luyện qua kỷ nguyên Quả Cầu Băng (-75°C) đạt độ tinh khiết tuyệt đối.",
+      "Mạng Lưới Tự Điều Hòa: Tinh thể trải khắp vỏ hành tinh giữ nhiệt độ ổn định 18°C – 32°C suốt hàng tỷ năm qua."
+    ],
+    "htmlFileUrl": "/uploads/history_1794269145505_tai_lieu_admin_test.html",
+    "htmlContent": "<html><body><h1>Custom Admin Page Test</h1><p>Testing backup and persistence</p></body></html>\n",
+    "videoUrl": "",
+    "lastUpdated": "2026-11-10T00:05:45.506Z",
+    "version": 3,
+    "isCustomUpload": true,
+    "uploadedFilename": "tai_lieu_admin_test.html",
+    "lastBackupId": "bk_history_1794269145505"
+  },
+  "geography": {
+    "id": "geography",
+    "title": "Địa Lý & Cảnh Quan Sinh Thái",
+    "subtitle": "Đại lục địa pha lê, quần đảo lơ lửng và đại dương năng lượng",
+    "summary": "Bề mặt MEOWN-2407 được bao bọc bởi 3 đại lục địa thạch anh phát quang sinh học, quần đảo không trọng lực Celestia và đại dương hydro lỏng thanh khiết điều tiết khí quyển toàn cầu.",
+    "highlights": [
+      "Lục địa Aethel: Nơi đặt Thủ đô Liên Hiệp và rặng tinh thể năng lượng Aether.",
+      "Quần đảo Lơ Lửng Celestia: Quần thể đảo bay với trọng lực 0.6G lý tưởng cho nghiên cứu học thuật.",
+      "Đại dương Pha Lê Cyan: Cung cấp nguồn nước giàu ion khoáng nuôi dưỡng thảm thực vật phát sáng.",
+      "Vực Thẳm Tinh Vân: Vùng trũng địa chất sâu nhất chứa mỏ đá cộng hưởng sóng tâm thức."
+    ],
+    "htmlFileUrl": "/uploads/geography.html",
+    "htmlContent": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Địa Lý & Cảnh Quan Sinh Thái - MEOWN-2407 Archive</title>\n  <style>\n    * { box-sizing: border-box; margin: 0; padding: 0; }\n    body {\n      background: #07090e;\n      color: #e2e8f0;\n      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;\n      line-height: 1.6;\n      padding: 24px;\n      overflow-x: hidden;\n    }\n    .container {\n      max-width: 900px;\n      margin: 0 auto;\n    }\n    .badge {\n      display: inline-block;\n      font-family: monospace;\n      font-size: 11px;\n      letter-spacing: 0.1em;\n      text-transform: uppercase;\n      color: #10b981;\n      border: 1px solid rgba(6, 182, 212, 0.3);\n      padding: 4px 10px;\n      border-radius: 4px;\n      background: rgba(6, 182, 212, 0.05);\n      margin-bottom: 12px;\n    }\n    h1 {\n      font-size: 26px;\n      font-weight: 700;\n      color: #ffffff;\n      margin-bottom: 6px;\n      letter-spacing: -0.02em;\n    }\n    .subtitle {\n      color: #94a3b8;\n      font-size: 14px;\n      margin-bottom: 24px;\n    }\n    .grid-2 {\n      display: grid;\n      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));\n      gap: 16px;\n      margin-bottom: 24px;\n    }\n    .card {\n      background: #0c1017;\n      border: 1px solid #1e293b;\n      border-radius: 8px;\n      padding: 18px;\n    }\n    .card h3 {\n      font-size: 15px;\n      font-weight: 600;\n      color: #f1f5f9;\n      margin-bottom: 8px;\n    }\n    .card p {\n      font-size: 13px;\n      color: #94a3b8;\n      line-height: 1.6;\n    }\n    .footer-stamp {\n      border-top: 1px solid #1e293b;\n      padding-top: 14px;\n      font-family: monospace;\n      font-size: 11px;\n      color: #64748b;\n      display: flex;\n      justify-content: space-between;\n      flex-wrap: wrap;\n      gap: 8px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"badge\">LƯU TRỮ TƯ LIỆU // MÃ PHÂN HỆ: GEOGRAPHY</div>\n    <h1>Địa Lý & Cảnh Quan Sinh Thái</h1>\n    <div class=\"subtitle\">Đại lục địa pha lê, quần đảo lơ lửng và đại dương năng lượng</div>\n\n    <div class=\"grid-2\">\n      <div class=\"card\">\n        <h3>✦ Thông Số Phân Hệ</h3>\n        <p>Hồ sơ ghi chép đã qua xác thực của Cục Văn Khố MEOWN-2407. Quản trị viên có thể cập nhật thêm thông tin và tải tệp HTML mới bất kỳ lúc nào.</p>\n      </div>\n      <div class=\"card\">\n        <h3>✦ Quy Chuẩn Đồng Bộ</h3>\n        <p>Tất cả tư liệu phân hệ đều có cấu trúc tương thích, hỗ trợ tải file HTML riêng và hiển thị tương tác trong khung cát lập an toàn.</p>\n      </div>\n    </div>\n\n    <div class=\"footer-stamp\">\n      <span>TƯ LIỆU: BAN VĂN KHỐ VŨ TRỤ MEOWN-2407</span>\n      <span>MÃ KHÓA: SEC-2407-VERIFIED</span>\n    </div>\n  </div>\n</body>\n</html>",
+    "videoUrl": "",
+    "lastUpdated": "2026-11-09T23:59:57.875Z",
+    "version": 1
+  },
+  "species": {
+    "id": "species",
+    "title": "Chủng Tộc & Dân Cư",
+    "subtitle": "Cộng đồng cư dân MEOWN bản địa và người Trái Đất định cư",
+    "summary": "Xã hội đa chủng tộc văn minh tôn trọng tự do và giao thoa văn hóa. Cư dân chủng MEOWN sở hữu trực giác nhạy bén, khả năng cảm thụ sóng năng lượng kết hợp cùng tư duy kiến tạo công nghệ của con người.",
+    "highlights": [
+      "Chủng Tộc MEOWN-Felis: Cư dân bản địa mang hình thái bán nhân hình thanh nhã, mắt thích nghi bóng tối và thính giác siêu tần.",
+      "Nhân Loại Trái Đất (Terrans): Đóng góp nền tảng kỹ thuật viễn thông, kiến trúc và nghệ thuật đương đại.",
+      "Thế Hệ Cộng Sinh: Thế hệ trẻ lớn lên trong các học viện đa loài, thành thạo cả ngôn ngữ âm thanh và sóng tâm thức.",
+      "Tập tục & Văn Hóa: Lễ hội Trăng Đôi Sol-Meown tổ chức định kỳ kỷ niệm tình hữu nghị liên hành tinh."
+    ],
+    "htmlFileUrl": "/uploads/species.html",
+    "htmlContent": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Chủng Tộc & Dân Cư - MEOWN-2407 Archive</title>\n  <style>\n    * { box-sizing: border-box; margin: 0; padding: 0; }\n    body {\n      background: #07090e;\n      color: #e2e8f0;\n      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;\n      line-height: 1.6;\n      padding: 24px;\n      overflow-x: hidden;\n    }\n    .container {\n      max-width: 900px;\n      margin: 0 auto;\n    }\n    .badge {\n      display: inline-block;\n      font-family: monospace;\n      font-size: 11px;\n      letter-spacing: 0.1em;\n      text-transform: uppercase;\n      color: #a855f7;\n      border: 1px solid rgba(6, 182, 212, 0.3);\n      padding: 4px 10px;\n      border-radius: 4px;\n      background: rgba(6, 182, 212, 0.05);\n      margin-bottom: 12px;\n    }\n    h1 {\n      font-size: 26px;\n      font-weight: 700;\n      color: #ffffff;\n      margin-bottom: 6px;\n      letter-spacing: -0.02em;\n    }\n    .subtitle {\n      color: #94a3b8;\n      font-size: 14px;\n      margin-bottom: 24px;\n    }\n    .grid-2 {\n      display: grid;\n      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));\n      gap: 16px;\n      margin-bottom: 24px;\n    }\n    .card {\n      background: #0c1017;\n      border: 1px solid #1e293b;\n      border-radius: 8px;\n      padding: 18px;\n    }\n    .card h3 {\n      font-size: 15px;\n      font-weight: 600;\n      color: #f1f5f9;\n      margin-bottom: 8px;\n    }\n    .card p {\n      font-size: 13px;\n      color: #94a3b8;\n      line-height: 1.6;\n    }\n    .footer-stamp {\n      border-top: 1px solid #1e293b;\n      padding-top: 14px;\n      font-family: monospace;\n      font-size: 11px;\n      color: #64748b;\n      display: flex;\n      justify-content: space-between;\n      flex-wrap: wrap;\n      gap: 8px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"badge\">LƯU TRỮ TƯ LIỆU // MÃ PHÂN HỆ: SPECIES</div>\n    <h1>Chủng Tộc & Dân Cư</h1>\n    <div class=\"subtitle\">Cộng đồng cư dân MEOWN bản địa và người Trái Đất định cư</div>\n\n    <div class=\"grid-2\">\n      <div class=\"card\">\n        <h3>✦ Thông Số Phân Hệ</h3>\n        <p>Hồ sơ ghi chép đã qua xác thực của Cục Văn Khố MEOWN-2407. Quản trị viên có thể cập nhật thêm thông tin và tải tệp HTML mới bất kỳ lúc nào.</p>\n      </div>\n      <div class=\"card\">\n        <h3>✦ Quy Chuẩn Đồng Bộ</h3>\n        <p>Tất cả tư liệu phân hệ đều có cấu trúc tương thích, hỗ trợ tải file HTML riêng và hiển thị tương tác trong khung cát lập an toàn.</p>\n      </div>\n    </div>\n\n    <div class=\"footer-stamp\">\n      <span>TƯ LIỆU: BAN VĂN KHỐ VŨ TRỤ MEOWN-2407</span>\n      <span>MÃ KHÓA: SEC-2407-VERIFIED</span>\n    </div>\n  </div>\n</body>\n</html>",
+    "videoUrl": "",
+    "lastUpdated": "2026-11-09T23:59:57.875Z",
+    "version": 1
+  },
+  "economy": {
+    "id": "economy",
+    "title": "Kinh Tế & Khí Hậu Sinh Quyển",
+    "subtitle": "Năng lượng Tinh Thạch Aether và Hệ sinh thái điều hòa toàn cầu",
+    "summary": "Kinh tế dựa trên năng lượng sạch vĩnh cửu từ Tinh Thạch Aether, thương mại liên sao qua đơn vị Tín Dụng Tinh Cầu (AEC). Hệ thống vi khí hậu được quản lý thông minh giữ nhiệt độ lý tưởng 21.5°C.",
+    "highlights": [
+      "Đồng tiền chung: Tín Dụng Aether (AEC) bảo chứng bởi trữ lượng năng lượng tái sinh sạch.",
+      "Hệ sinh thái Gaia-Grid: Mạng lưới tháp điều hòa vi khí hậu ngăn ngừa bão vũ trụ và bức xạ mặt trời.",
+      "Ngành công nghiệp mũi nhọn: Động cơ bước nhảy lượng tử, dược liệu phát quang sinh học và du lịch sinh thái sao.",
+      "Chính sách an sinh: Phổ cập nhà ở, y tế tái tạo mô tế bào và giao thông đệm từ miễn phí toàn cầu."
+    ],
+    "htmlFileUrl": "/uploads/economy.html",
+    "htmlContent": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Kinh Tế & Khí Hậu Sinh Quyển - MEOWN-2407 Archive</title>\n  <style>\n    * { box-sizing: border-box; margin: 0; padding: 0; }\n    body {\n      background: #07090e;\n      color: #e2e8f0;\n      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;\n      line-height: 1.6;\n      padding: 24px;\n      overflow-x: hidden;\n    }\n    .container {\n      max-width: 900px;\n      margin: 0 auto;\n    }\n    .badge {\n      display: inline-block;\n      font-family: monospace;\n      font-size: 11px;\n      letter-spacing: 0.1em;\n      text-transform: uppercase;\n      color: #f59e0b;\n      border: 1px solid rgba(6, 182, 212, 0.3);\n      padding: 4px 10px;\n      border-radius: 4px;\n      background: rgba(6, 182, 212, 0.05);\n      margin-bottom: 12px;\n    }\n    h1 {\n      font-size: 26px;\n      font-weight: 700;\n      color: #ffffff;\n      margin-bottom: 6px;\n      letter-spacing: -0.02em;\n    }\n    .subtitle {\n      color: #94a3b8;\n      font-size: 14px;\n      margin-bottom: 24px;\n    }\n    .grid-2 {\n      display: grid;\n      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));\n      gap: 16px;\n      margin-bottom: 24px;\n    }\n    .card {\n      background: #0c1017;\n      border: 1px solid #1e293b;\n      border-radius: 8px;\n      padding: 18px;\n    }\n    .card h3 {\n      font-size: 15px;\n      font-weight: 600;\n      color: #f1f5f9;\n      margin-bottom: 8px;\n    }\n    .card p {\n      font-size: 13px;\n      color: #94a3b8;\n      line-height: 1.6;\n    }\n    .footer-stamp {\n      border-top: 1px solid #1e293b;\n      padding-top: 14px;\n      font-family: monospace;\n      font-size: 11px;\n      color: #64748b;\n      display: flex;\n      justify-content: space-between;\n      flex-wrap: wrap;\n      gap: 8px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"badge\">LƯU TRỮ TƯ LIỆU // MÃ PHÂN HỆ: ECONOMY</div>\n    <h1>Kinh Tế & Khí Hậu Sinh Quyển</h1>\n    <div class=\"subtitle\">Năng lượng Tinh Thạch Aether và Hệ sinh thái điều hòa toàn cầu</div>\n\n    <div class=\"grid-2\">\n      <div class=\"card\">\n        <h3>✦ Thông Số Phân Hệ</h3>\n        <p>Hồ sơ ghi chép đã qua xác thực của Cục Văn Khố MEOWN-2407. Quản trị viên có thể cập nhật thêm thông tin và tải tệp HTML mới bất kỳ lúc nào.</p>\n      </div>\n      <div class=\"card\">\n        <h3>✦ Quy Chuẩn Đồng Bộ</h3>\n        <p>Tất cả tư liệu phân hệ đều có cấu trúc tương thích, hỗ trợ tải file HTML riêng và hiển thị tương tác trong khung cát lập an toàn.</p>\n      </div>\n    </div>\n\n    <div class=\"footer-stamp\">\n      <span>TƯ LIỆU: BAN VĂN KHỐ VŨ TRỤ MEOWN-2407</span>\n      <span>MÃ KHÓA: SEC-2407-VERIFIED</span>\n    </div>\n  </div>\n</body>\n</html>",
+    "videoUrl": "",
+    "lastUpdated": "2026-11-09T23:59:57.875Z",
+    "version": 1
+  },
+  "systems": {
+    "id": "systems",
+    "title": "Các Hệ Thống Liên Tinh",
+    "subtitle": "Mạng lưới Cổng Bước Nhảy, Hạm đội Liên Hiệp và Tuyến Hàng Hải Sao",
+    "summary": "Hệ thống hạ tầng liên tinh gồm 12 trạm không gian quỹ đạo, 3 cổng bước nhảy vĩ mô kết nối Trái Đất, MEOWN-2407 và các trạm trung chuyển trong Liên Bang Sao.",
+    "highlights": [
+      "Cổng Bước Nhảy Alpha-9: Nút thắt giao thông huyết mạch đảm bảo lưu thông hơn 200 lượt tuần dương hạm mỗi ngày.",
+      "Trạm Quỹ Đạo Aethel-Prime: Trung tâm ngoại giao, kiểm soát không lưu và tiếp nhiên liệu tinh thể.",
+      "Hạm Đội Bảo Hộ Star Aegis: Lực lượng tuần tra chung giữ gìn an ninh hàng hải liên sao khỏi hải tặc vũ trụ.",
+      "Hiệp Định Không Gian Mở: Cam kết phi quân sự hóa các tuyến đường du lịch và nghiên cứu khoa học."
+    ],
+    "htmlFileUrl": "/uploads/systems.html",
+    "htmlContent": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Các Hệ Thống Liên Tinh - MEOWN-2407 Archive</title>\n  <style>\n    * { box-sizing: border-box; margin: 0; padding: 0; }\n    body {\n      background: #07090e;\n      color: #e2e8f0;\n      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;\n      line-height: 1.6;\n      padding: 24px;\n      overflow-x: hidden;\n    }\n    .container {\n      max-width: 900px;\n      margin: 0 auto;\n    }\n    .badge {\n      display: inline-block;\n      font-family: monospace;\n      font-size: 11px;\n      letter-spacing: 0.1em;\n      text-transform: uppercase;\n      color: #3b82f6;\n      border: 1px solid rgba(6, 182, 212, 0.3);\n      padding: 4px 10px;\n      border-radius: 4px;\n      background: rgba(6, 182, 212, 0.05);\n      margin-bottom: 12px;\n    }\n    h1 {\n      font-size: 26px;\n      font-weight: 700;\n      color: #ffffff;\n      margin-bottom: 6px;\n      letter-spacing: -0.02em;\n    }\n    .subtitle {\n      color: #94a3b8;\n      font-size: 14px;\n      margin-bottom: 24px;\n    }\n    .grid-2 {\n      display: grid;\n      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));\n      gap: 16px;\n      margin-bottom: 24px;\n    }\n    .card {\n      background: #0c1017;\n      border: 1px solid #1e293b;\n      border-radius: 8px;\n      padding: 18px;\n    }\n    .card h3 {\n      font-size: 15px;\n      font-weight: 600;\n      color: #f1f5f9;\n      margin-bottom: 8px;\n    }\n    .card p {\n      font-size: 13px;\n      color: #94a3b8;\n      line-height: 1.6;\n    }\n    .footer-stamp {\n      border-top: 1px solid #1e293b;\n      padding-top: 14px;\n      font-family: monospace;\n      font-size: 11px;\n      color: #64748b;\n      display: flex;\n      justify-content: space-between;\n      flex-wrap: wrap;\n      gap: 8px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"badge\">LƯU TRỮ TƯ LIỆU // MÃ PHÂN HỆ: SYSTEMS</div>\n    <h1>Các Hệ Thống Liên Tinh</h1>\n    <div class=\"subtitle\">Mạng lưới Cổng Bước Nhảy, Hạm đội Liên Hiệp và Tuyến Hàng Hải Sao</div>\n\n    <div class=\"grid-2\">\n      <div class=\"card\">\n        <h3>✦ Thông Số Phân Hệ</h3>\n        <p>Hồ sơ ghi chép đã qua xác thực của Cục Văn Khố MEOWN-2407. Quản trị viên có thể cập nhật thêm thông tin và tải tệp HTML mới bất kỳ lúc nào.</p>\n      </div>\n      <div class=\"card\">\n        <h3>✦ Quy Chuẩn Đồng Bộ</h3>\n        <p>Tất cả tư liệu phân hệ đều có cấu trúc tương thích, hỗ trợ tải file HTML riêng và hiển thị tương tác trong khung cát lập an toàn.</p>\n      </div>\n    </div>\n\n    <div class=\"footer-stamp\">\n      <span>TƯ LIỆU: BAN VĂN KHỐ VŨ TRỤ MEOWN-2407</span>\n      <span>MÃ KHÓA: SEC-2407-VERIFIED</span>\n    </div>\n  </div>\n</body>\n</html>",
+    "videoUrl": "",
+    "lastUpdated": "2026-11-09T23:59:57.875Z",
+    "version": 1
+  }
+}

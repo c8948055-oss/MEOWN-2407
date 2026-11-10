@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lịch Sử Kiến Tạo & Tiến Hóa Cổ Hành Tinh MEOWN-2407</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #06080d;
+      color: #e2e8f0;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #06b6d4;
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(6, 182, 212, 0.05);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      color: #94a3b8;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .stat-pill {
+      background: #0c1018;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .stat-label {
+      font-size: 10px;
+      font-family: monospace;
+      text-transform: uppercase;
+      color: #64748b;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .stat-val {
+      font-size: 16px;
+      font-weight: 700;
+      color: #38bdf8;
+      font-family: monospace;
+    }
+    .stat-sub {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 340px;
+      background: #020408;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .hud-overlay {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      font-family: monospace;
+      font-size: 11px;
+      color: rgba(56, 189, 248, 0.9);
+      background: rgba(4, 6, 12, 0.75);
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      pointer-events: none;
+    }
+    .hud-sub {
+      position: absolute;
+      bottom: 12px;
+      right: 14px;
+      font-family: monospace;
+      font-size: 10px;
+      color: #94a3b8;
+      background: rgba(4, 6, 12, 0.75);
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .era-section {
+      background: #0a0e17;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .era-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 10px;
+    }
+    .era-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .era-time {
+      font-family: monospace;
+      font-size: 11px;
+      color: #06b6d4;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .sub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .sub-card {
+      background: #060911;
+      border: 1px solid #192231;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .sub-card h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+    .sub-card p {
+      font-size: 12.5px;
+      color: #94a3b8;
+      line-height: 1.55;
+    }
+    .crystal-box {
+      background: rgba(6, 182, 212, 0.04);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+    .crystal-box h4 {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #22d3ee;
+      margin-bottom: 6px;
+    }
+    .crystal-box p {
+      font-size: 12.5px;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+    .footer-stamp {
+      border-top: 1px solid #1e293b;
+      padding-top: 14px;
+      font-family: monospace;
+      font-size: 11px;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="badge">BIÊN NIÊN ĐỊA CHẤT & TIẾN HÓA // MEOWN-2407</div>
+    <h1>Lịch Sử Hình Thành & Cổ Hành Tinh MEOWN-2407</h1>
+    <div class="subtitle">Niên đại 12,4 tỷ năm · Khối lượng 1,82 M⊕ · Hệ mặt trăng đôi Selene-I & Selene-II · Năng lượng Tinh Thể MEOWN vĩnh cửu</div>
+
+    <!-- Quick Stats Metric Strip -->
+    <div class="stats-strip">
+      <div class="stat-pill">
+        <span class="stat-label">Niên Đại</span>
+        <div class="stat-val">12,4 Tỷ Năm</div>
+        <div class="stat-sub">Quần thể sao II cổ</div>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-label">Khối Lượng</span>
+        <div class="stat-val">1,82 M⊕</div>
+        <div class="stat-sub">Gấp 1,82 lần Trái Đất</div>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-label">Ngày-Đêm</span>
+        <div class="stat-val">32,0 Giờ</div>
+        <div class="stat-sub">Thủy triều nhịp đôi</div>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-label">Nghiêng Trục</span>
+        <div class="stat-val">21,8°</div>
+        <div class="stat-sub">Bốn mùa điều hòa</div>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-label">Hệ Vệ Tinh</span>
+        <div class="stat-val">2 Mặt Trăng</div>
+        <div class="stat-sub">Selene-I & Selene-II</div>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-label">Từ Quyển</span>
+        <div class="stat-val">8× Trái Đất</div>
+        <div class="stat-sub">Bảo vệ tuyệt đối</div>
+      </div>
+    </div>
+
+    <!-- Interactive Celestial Canvas: MEOWN-2407 + Moons Selene I & II -->
+    <div class="canvas-container">
+      <div class="hud-overlay">MÔ PHỎNG VẬN HÀNH QUỸ ĐẠO // CỘNG HƯỞNG LAPLACE SELENE I & II</div>
+      <div class="hud-sub">CHU KỲ TỰ QUAY: 32.0h // ĐỘ NGHIÊNG: 21.8°</div>
+      <canvas id="spaceCanvas"></canvas>
+    </div>
+
+    <!-- ERA I -->
+    <div class="era-section">
+      <div class="era-header">
+        <div class="era-title">
+          <span>✦ KỶ NGUYÊN I: BÌNH MINH BỒI TỤ VŨ TRỤ & VA CHẠM ACHERON</span>
+        </div>
+        <span class="era-time">12,4 - 11,2 TỶ NĂM TRƯỚC</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card">
+          <h4>1. Bẫy Dị Thường Lượng Tử Sơ Khai</h4>
+          <p>Tâm khối bồi tụ đã va chạm và nuốt trọn một điểm dị thường tô-pô học (micro-singularity) còn sót lại sau vụ nổ Big Bang. Lực hút cực hạn tạo ra hạt nhân hành tinh vĩnh cửu, duy trì trường hấp dẫn và mô-men ổn định suốt 12,4 tỷ năm.</p>
+        </div>
+        <div class="sub-card">
+          <h4>2. Đại Dương Magma & Từ Quyển Siêu Cường</h4>
+          <p>Nóng chảy sâu hơn 3.000 km biến hành tinh thành quả cầu magma rực lửa. Kim loại nặng chìm sâu tạo lõi sắt-niken siêu nén (bán kính 2.400 km), kích hoạt Geodynamo sinh ra từ quyển siêu cường gấp 8 lần Trái Đất.</p>
+        </div>
+        <div class="sub-card" style="grid-column: 1 / -1;">
+          <h4>3. Va Chạm Acheron & Hệ Hai Mặt Trăng Selene-I, Selene-II (Khoảng 11,9 tỷ năm trước)</h4>
+          <p>Thiên thể Acheron va chạm sượt góc 34°, làm nghiêng trục địa cực về 21,8° (tạo 4 mùa khí hậu) và bắn tung vành đai bụi silicat nóng chảy. Vành đai kết tụ thành 2 vệ tinh tự nhiên <strong>Selene-I</strong> và <strong>Selene-II</strong> cộng hưởng Laplace. Lực ma sát thủy triều nhịp đôi hãm dần tốc độ tự quay về đúng 32 giờ chuẩn.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ERA II -->
+    <div class="era-section">
+      <div class="era-header">
+        <div class="era-title">
+          <span>✦ KỶ NGUYÊN II: THỦY QUYỂN NGUYÊN KHAI & TINH THỂ MEOWN</span>
+        </div>
+        <span class="era-time">11,2 - 8,5 TỶ NĂM TRƯỚC</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card">
+          <h4>1. Thoát Khí & Đại Dương Siêu Mặn</h4>
+          <p>Khí quyển nguyên thủy áp suất 5,2 bar (nước sôi ở 153°C). Khi bề mặt nguội dưới 153°C, mưa acid xối xả kéo dài hơn 8 triệu năm đã lấp đầy các bồn trũng, kiến tạo đại dương bao phủ 82% bề mặt với độ mặn gấp 4 lần đại dương Trái Đất.</p>
+        </div>
+        <div class="sub-card">
+          <h4>2. Sự Ra Đời Của Tinh Thể MEOWN</h4>
+          <p>Tại đới ranh giới D'' sâu 2.800 km (áp suất > 135 GPa, nhiệt độ > 3.800 K), sóng hạ nguyên tử từ lõi kỳ dị kích thích khóa các electron silicat vào dao động lượng tử đồng bộ, chuyển pha thành <strong>Tinh Thể MEOWN</strong> thể rắn siêu dẫn.</p>
+        </div>
+      </div>
+      <div class="crystal-box">
+        <h4>✦ Đặc Tính Năng Lượng Địa Chất Độc Nhất Vô Nhị</h4>
+        <p>Các chùm magma nhiệt siêu sâu (Superplumes) đẩy khoáng vật này lên lớp vỏ ngoài thành các khối lục giác siêu cứng dọc theo đứt gãy đại dương. Mạng tinh thể này sở hữu khả năng bảo toàn mật độ thế năng vĩnh cửu không suy giảm, trở thành nền tảng năng lượng cho toàn hành tinh.</p>
+      </div>
+    </div>
+
+    <!-- ERA III -->
+    <div class="era-section">
+      <div class="era-header">
+        <div class="era-title">
+          <span>✦ KỶ NGUYÊN III: KIẾN TẠO MẢNG & BIẾN CỐ BĂNG HÀ TOÀN CẦU</span>
+        </div>
+        <span class="era-time">8,5 - 4,0 TỶ NĂM TRƯỚC</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card">
+          <h4>1. Phân Rã Siêu Lục Địa Pangaea-M</h4>
+          <p>Khoảng 7,5 tỷ năm trước, siêu lục địa Pangaea-M nứt vỡ thành 4 mảng lục địa độc lập. Hoạt động uốn nếp kiến tạo đẩy các rặng núi Tinh Thể MEOWN trồi lên mặt đất, kiến tạo nên những rặng núi khoáng vật phát sáng cao hàng nghìn mét.</p>
+        </div>
+        <div class="sub-card">
+          <h4>2. Quả Cầu Băng Cổ Đại & Tôi Luyện Tinh Thể</h4>
+          <p>Khoảng 6,2 tỷ năm trước, nhiệt độ toàn cầu tụt dốc xuống âm 75°C, băng dày 8–15 km giam hãm suốt 1,5 tỷ năm. Áp suất thủy tĩnh khổng lồ đã ép vỡ vi bọt khí, tôi luyện Tinh Thể MEOWN đạt độ tinh khiết phân tử tuyệt đối, triệt tiêu phân rã tự phát.</p>
+        </div>
+        <div class="sub-card" style="grid-column: 1 / -1;">
+          <h4>3. Đại Phun Trào Giải Thoát Địa Chất (4,5 - 4,0 tỷ năm trước)</h4>
+          <p>Hàng loạt chuỗi siêu núi lửa xuyên thủng lớp băng, tống khí nhà kính vào khí quyển làm nhiệt độ tăng vọt hơn 100°C. Lũ tan băng dữ dội xé toạc lục địa, hình thành các lòng chảo đại dương hiện đại và đưa nước biển về mức cân bằng hóa học ngọt hóa ổn định.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ERA IV -->
+    <div class="era-section">
+      <div class="era-header">
+        <div class="era-title">
+          <span>✦ KỶ NGUYÊN IV: CÂN BẰNG ĐỊA HÓA & CỔ HÀNH TINH TRƯỜNG TỒN</span>
+        </div>
+        <span class="era-time">4,0 TỶ NĂM TRƯỚC - HIỆN TẠI</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card">
+          <h4>1. Hệ Thống Tự Điều Hòa Nhiệt Độ</h4>
+          <p>Mạng lưới Tinh Thể MEOWN trải dài từ lõi tới rặng núi hoạt động như bộ điều nhiệt khổng lồ: giải phóng nhiệt khi trời lạnh và hấp thu quang năng khi trời nóng, giữ nhiệt độ bề mặt luôn ổn định từ 18°C đến 32°C suốt hàng tỷ năm.</p>
+        </div>
+        <div class="sub-card">
+          <h4>2. Cái Nôi Trường Tồn Của Văn Minh</h4>
+          <p>Khí quyển thứ sinh áp suất 1,4 bar giàu nitơ và từ quyển siêu cường vững chãi đã biến MEOWN-2407 thành đài tưởng niệm bất biến của vũ trụ, trở thành ngôi nhà chung trường tồn nuôi dưỡng sự cộng sinh giữa chủng tộc MEOWN và Nhân loại.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-stamp">
+      <span>TƯ LIỆU: CỤC VĂN KHỐ CỔ HÀNH TINH MEOWN-2407</span>
+      <span>MÃ KHÓA: GEOLOGY-CHRONICLE-2407</span>
+    </div>
+  </div>
+
+  <script>
+    // Celestial Canvas Simulation: MEOWN-2407 with core + Moons Selene I & II
+    const canvas = document.getElementById('spaceCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resize() {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const stars = Array.from({ length: 70 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 1.6 + 0.4,
+      speed: Math.random() * 0.2 + 0.05,
+      alpha: Math.random() * 0.8 + 0.2
+    }));
+
+    let angle1 = 0;
+    let angle2 = 1.2;
+    let pulse = 0;
+
+    function animate() {
+      ctx.fillStyle = '#020408';
+      ctx.fillRect(0, 0, width, height);
+
+      // Stars
+      ctx.fillStyle = '#ffffff';
+      stars.forEach(star => {
+        star.y += star.speed;
+        if (star.y > height) star.y = 0;
+        ctx.globalAlpha = star.alpha;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+
+      const cx = width / 2;
+      const cy = height / 2;
+
+      // Orbit 1 (Selene-I inner orbit)
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.25)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 5]);
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, 95, 45, -0.15, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Orbit 2 (Selene-II outer orbit)
+      ctx.strokeStyle = 'rgba(168, 85, 247, 0.25)';
+      ctx.setLineDash([4, 6]);
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, 150, 75, -0.15, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Magnetic field flux lines
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.08)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, 50, 80, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Central MEOWN-2407 Body
+      const pRadius = 26;
+      pulse += 0.03;
+      const corePulse = Math.sin(pulse) * 4;
+
+      // Atmosphere glow
+      const atmoGlow = ctx.createRadialGradient(cx, cy, pRadius * 0.6, cx, cy, pRadius + 14);
+      atmoGlow.addColorStop(0, '#0284c7');
+      atmoGlow.addColorStop(0.6, 'rgba(6, 182, 212, 0.35)');
+      atmoGlow.addColorStop(1, 'transparent');
+      ctx.fillStyle = atmoGlow;
+      ctx.beginPath();
+      ctx.arc(cx, cy, pRadius + 14, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Planet disk
+      const planetGrad = ctx.createRadialGradient(cx - 8, cy - 8, 4, cx, cy, pRadius);
+      planetGrad.addColorStop(0, '#0e7490');
+      planetGrad.addColorStop(0.7, '#083344');
+      planetGrad.addColorStop(1, '#020617');
+      ctx.fillStyle = planetGrad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, pRadius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Singularity core glow
+      ctx.fillStyle = '#22d3ee';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 3.5 + corePulse * 0.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 11px monospace';
+      ctx.fillText('MEOWN-2407', cx - 35, cy + pRadius + 16);
+
+      // Selene-I (Closer moon, faster orbit)
+      const rot = -0.15;
+      const cosR = Math.cos(rot);
+      const sinR = Math.sin(rot);
+
+      const raw1x = Math.cos(angle1) * 95;
+      const raw1y = Math.sin(angle1) * 45;
+      const m1x = cx + (raw1x * cosR - raw1y * sinR);
+      const m1y = cy + (raw1x * sinR + raw1y * cosR);
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath();
+      ctx.arc(m1x, m1y, 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10px monospace';
+      ctx.fillText('Selene-I', m1x + 8, m1y + 3);
+
+      // Selene-II (Outer moon, Laplace resonance)
+      const raw2x = Math.cos(angle2) * 150;
+      const raw2y = Math.sin(angle2) * 75;
+      const m2x = cx + (raw2x * cosR - raw2y * sinR);
+      const m2y = cy + (raw2x * sinR + raw2y * cosR);
+
+      ctx.fillStyle = '#c084fc';
+      ctx.beginPath();
+      ctx.arc(m2x, m2y, 6.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10px monospace';
+      ctx.fillText('Selene-II', m2x + 9, m2y + 3);
+
+      angle1 += 0.024; // Selene-I faster
+      angle2 += 0.012; // Selene-II 1:2 resonance
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>

@@ -11,6 +11,20 @@ export interface TabContent {
   videoUrl?: string;
   lastUpdated: string;
   version: number;
+  isCustomUpload?: boolean;
+  uploadedFilename?: string;
+  lastBackupId?: string;
+}
+
+export interface BackupRecord {
+  id: string;
+  tabId: string;
+  filename: string;
+  originalName: string;
+  timestamp: string;
+  size: number;
+  url: string;
+  title?: string;
 }
 
 export type AllContent = Record<TabId, TabContent>;

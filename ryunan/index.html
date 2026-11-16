@@ -31,6 +31,7 @@
 </main><footer class="footer"><div class="wrap footer-inner"><div><div class="brand">POKÉMON RYUNAN</div><p>Regional World Guide · Cổng thông tin vùng đất Ryunan</p></div><div><p>Hồ sơ thế giới hư cấu do người dùng xây dựng.</p><p>© Ryunan Regional Archive</p></div></div></footer>
 <button class="top" id="topBtn" aria-label="Về đầu trang">↑</button><div class="modal" id="profileModal" role="dialog" aria-modal="true"><div class="modal-box"><button class="modal-close" id="modalClose" aria-label="Đóng">✕</button><div id="modalContent"></div></div></div><div class="lightbox" id="lightbox"><button class="lightbox-tools lightbox-close" id="lightboxClose" aria-label="Đóng">✕</button><img id="lightboxImg" alt="Ảnh phóng to"><div class="lightbox-caption" id="lightboxCaption"></div><div class="lightbox-tools"><button id="prevImg">←</button><button id="zoomOut">−</button><button id="zoomReset">100%</button><button id="zoomIn">+</button><button id="nextImg">→</button></div></div>
 <script>
+document.addEventListener('error',event=>{const img=event.target;if(!(img instanceof HTMLImageElement)||!img.src.includes('/assets/'))return;img.style.display='none';const note=document.createElement('div');note.className='asset-missing';note.textContent='Ảnh sẽ hiển thị sau khi bổ sung tệp vào ryunan/assets/';img.insertAdjacentElement('afterend',note)},true);
 const A='assets/';
 const locations=[
 ['Hiryu','Thành phố','Đô thị miền Bắc nằm giữa vùng núi và thung lũng, là điểm kết nối quan trọng trên hành trình khám phá Ryunan.'],
